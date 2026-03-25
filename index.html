@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DAMIRO — премиальный стритвир бренд. Минимализм, качество, идентичность. Новая коллекция 2025.">
+  <meta name="keywords" content="damiro, streetwear, одежда, стритвир, худи, штаны, джинсы">
+  <meta property="og:title" content="DAMIRO — Premium Streetwear">
+  <meta property="og:description" content="Минимализм. Качество. Идентичность.">
+  <meta property="og:type" content="website">
+  <title>DAMIRO — Premium Streetwear</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ============================================
+       NAVIGATION
+       ============================================ -->
+  <nav class="nav nav-transparent" id="main-nav">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a class="nav-logo" onclick="navigate('home')" href="#">DAMIRO</a>
+
+      <!-- Desktop Links -->
+      <ul class="nav-links">
+        <li><a class="nav-link" data-page="shop" onclick="navigate('shop')" href="#">Каталог</a></li>
+        <li><a class="nav-link" data-page="about" onclick="navigate('about')" href="#">О бренде</a></li>
+        <li><a class="nav-link" data-page="contact" onclick="navigate('contact')" href="#">Контакты</a></li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <!-- Search -->
+        <button class="nav-icon-btn" title="Поиск" onclick="navigate('shop')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+
+        <!-- Account -->
+        <button class="nav-icon-btn" title="Аккаунт" onclick="navigate('account')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </button>
+
+        <!-- Wishlist -->
+        <button class="nav-icon-btn" title="Избранное" onclick="navigate('account'); state.accountTab='wishlist'; renderApp();">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
+
+        <!-- Cart -->
+        <button class="nav-icon-btn" title="Корзина" onclick="navigate('cart')" style="position:relative;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="nav-cart-count" id="cart-count" style="display:none;">0</span>
+        </button>
+
+        <!-- Hamburger -->
+        <button class="nav-hamburger" onclick="openMobileMenu()" aria-label="Меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       MOBILE MENU
+       ============================================ -->
+  <div class="mobile-menu-overlay" id="mobile-overlay" onclick="closeMobileMenu()"></div>
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-header">
+      <span class="nav-logo" style="color:var(--white);font-size:24px;">DAMIRO</span>
+      <button class="mobile-menu-close" onclick="closeMobileMenu()">✕</button>
+    </div>
+    <nav class="mobile-menu-links">
+      <a class="mobile-menu-link" onclick="mobileNavigate('home')" href="#">Главная</a>
+      <a class="mobile-menu-link" onclick="mobileNavigate('shop')" href="#">Каталог</a>
+      <a class="mobile-menu-link" onclick="mobileNavigate('about')" href="#">О бренде</a>
+      <a class="mobile-menu-link" onclick="mobileNavigate('contact')" href="#">Контакты</a>
+      <a class="mobile-menu-link" onclick="mobileNavigate('cart')" href="#">Корзина</a>
+      <a class="mobile-menu-link" onclick="mobileNavigate('account')" href="#">Аккаунт</a>
+    </nav>
+    <div style="padding:0 32px 40px;">
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;">
+        <div class="footer-link" style="color:rgba(255,255,255,0.5);font-size:13px;">hello@damiro.ru</div>
+        <div class="footer-link" style="color:rgba(255,255,255,0.5);font-size:13px;">+7 (495) 123-45-67</div>
+      </div>
+      <div class="footer-social" style="margin-top:24px;">
+        <a class="footer-social-link" href="#">IG</a>
+        <a class="footer-social-link" href="#">TG</a>
+        <a class="footer-social-link" href="#">VK</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       PAGES
+       ============================================ -->
+  <main>
+    <div id="page-home" class="page"></div>
+    <div id="page-shop" class="page"></div>
+    <div id="page-product" class="page"></div>
+    <div id="page-about" class="page"></div>
+    <div id="page-contact" class="page"></div>
+    <div id="page-cart" class="page"></div>
+    <div id="page-checkout" class="page"></div>
+    <div id="page-account" class="page"></div>
+  </main>
+
+  <!-- ============================================
+       FOOTER (shown on non-checkout pages)
+       ============================================ -->
+  <footer class="footer" id="main-footer">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a class="nav-logo" onclick="navigate('home')" href="#">DAMIRO</a>
+          <p class="footer-tagline">Минимализм. Качество. Идентичность.<br>Каждая вещь создана с намерением.</p>
+          <div class="footer-social">
+            <a class="footer-social-link" href="#" title="Instagram">IG</a>
+            <a class="footer-social-link" href="#" title="Telegram">TG</a>
+            <a class="footer-social-link" href="#" title="VKontakte">VK</a>
+          </div>
+        </div>
+
+        <!-- Catalog -->
+        <div>
+          <div class="footer-col-title">Каталог</div>
+          <ul class="footer-links">
+            <li><a class="footer-link" onclick="navigate('shop')" href="#">Все товары</a></li>
+            <li><a class="footer-link" onclick="state.shopFilters.category='hoodies';navigate('shop')" href="#">Худи</a></li>
+            <li><a class="footer-link" onclick="state.shopFilters.category='pants';navigate('shop')" href="#">Штаны</a></li>
+            <li><a class="footer-link" onclick="state.shopFilters.category='outerwear';navigate('shop')" href="#">Верхняя одежда</a></li>
+            <li><a class="footer-link" onclick="state.shopFilters.category='accessories';navigate('shop')" href="#">Аксессуары</a></li>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div>
+          <div class="footer-col-title">Информация</div>
+          <ul class="footer-links">
+            <li><a class="footer-link" onclick="navigate('about')" href="#">О бренде</a></li>
+            <li><a class="footer-link" onclick="navigate('contact')" href="#">Контакты</a></li>
+            <li><a class="footer-link" href="#">Доставка и оплата</a></li>
+            <li><a class="footer-link" href="#">Возврат и обмен</a></li>
+            <li><a class="footer-link" href="#">Размерная сетка</a></li>
+          </ul>
+        </div>
+
+        <!-- Account -->
+        <div>
+          <div class="footer-col-title">Аккаунт</div>
+          <ul class="footer-links">
+            <li><a class="footer-link" onclick="navigate('account')" href="#">Личный кабинет</a></li>
+            <li><a class="footer-link" onclick="navigate('account');state.accountTab='orders';" href="#">Мои заказы</a></li>
+            <li><a class="footer-link" onclick="navigate('account');state.accountTab='wishlist';" href="#">Избранное</a></li>
+            <li><a class="footer-link" onclick="navigate('cart')" href="#">Корзина</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 DAMIRO. Все права защищены.</p>
+        <div class="footer-legal">
+          <a href="#">Политика конфиденциальности</a>
+          <a href="#">Условия использования</a>
+          <a href="#">Публичная оферта</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       QUICK VIEW MODAL
+       ============================================ -->
+  <div class="modal-overlay" id="quick-view-modal" onclick="if(event.target===this)closeQuickView()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeQuickView()">✕</button>
+      <div class="modal-grid"></div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SIZE GUIDE MODAL
+       ============================================ -->
+  <div class="modal-overlay size-guide-modal" id="size-guide-modal" onclick="if(event.target===this)closeSizeGuide()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeSizeGuide()">✕</button>
+      <div class="modal-info">
+        <h2 class="heading-md mb-8">Таблица размеров</h2>
+        <p class="body-sm" style="color:var(--gray-500);margin-bottom:24px;">Все измерения в сантиметрах. Измеряйте поверх нижнего белья.</p>
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th>Размер</th>
+              <th>Грудь</th>
+              <th>Талия</th>
+              <th>Бёдра</th>
+              <th>Рост</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>XS</strong></td><td>82–86</td><td>66–70</td><td>90–94</td><td>164–170</td></tr>
+            <tr><td><strong>S</strong></td><td>86–92</td><td>70–76</td><td>94–100</td><td>168–174</td></tr>
+            <tr><td><strong>M</strong></td><td>92–98</td><td>76–82</td><td>100–106</td><td>172–178</td></tr>
+            <tr><td><strong>L</strong></td><td>98–106</td><td>82–90</td><td>106–114</td><td>176–182</td></tr>
+            <tr><td><strong>XL</strong></td><td>106–114</td><td>90–98</td><td>114–122</td><td>180–186</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:24px;padding:16px;background:var(--gray-50);border-left:3px solid var(--black);">
+          <p class="body-sm"><strong>Совет:</strong> Если вы оказались на границе размеров, выбирайте больший для свободного кроя или меньший для облегающего.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       TOAST NOTIFICATIONS
+       ============================================ -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- App Script -->
+  <script src="app.js"></script>
+
+</body>
+</html>
