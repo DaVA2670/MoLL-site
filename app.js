@@ -7,6 +7,56 @@
 // ============================================
 // PRODUCT DATA
 // ============================================
+// ---- Unsplash photo URLs (portrait 3:4 for cards, landscape for editorial) ----
+const U = (id, w = 600, h = 800) =>
+  `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&q=82&auto=format`;
+
+// Reusable photo sets
+const PHOTOS = {
+  // Dark streetwear editorial
+  darkHoodie:    U('1556821840-3a63f15732ce'),
+  darkStreet:    U('1529720317453-c8da503f2051'),
+  darkJacket:    U('1542291026-7eec264c27ff'),
+  darkEditorial: U('1503342217505-b0a15ec3261c'),
+  darkPants:     U('1552902865-b72c031ac5ea'),
+  darkPants2:    U('1515886657613-9f3515b0c78f'),
+  darkJeans:     U('1507545115577-b0f07e1b6c80'),
+  darkZip:       U('1583743814966-8d4d0ec6cc96'),
+  darkVest:      U('1566138153780-9fcf9ea9f0b0'),
+  darkLong:      U('1490481910895-0d79c1f398b4'),
+  // Light / minimal
+  whiteHoodie:   U('1521572163474-6864f9cf17ab'),
+  whiteShirt:    U('1598300042247-d088f8ab3a91'),
+  lightOutfit:   U('1617196034183-421b4040ed20'),
+  // Accessories / detail
+  accessories:   U('1611558709564-24f5d4b0a86d'),
+  accessories2:  U('1519085360753-af0119f7cbe7'),
+  // Hero / wide
+  heroWide:      U('1529720317453-c8da503f2051', 1600, 1000),
+  hero2Wide:     U('1556821840-3a63f15732ce',    1600, 1000),
+  featW:         U('1542291026-7eec264c27ff',     1200, 800),
+  feat2W:        U('1515886657613-9f3515b0c78f',  1200, 800),
+  feat3W:        U('1552902865-b72c031ac5ea',     1200, 800),
+  // About / editorial
+  aboutHero:     U('1503342217505-b0a15ec3261c',  1600, 900),
+  aboutStory:    U('1490481910895-0d79c1f398b4'),
+  aboutFull:     U('1515886657613-9f3515b0c78f',  1600, 900),
+  // Instagram grid
+  insta1: U('1556821840-3a63f15732ce',    800, 800),
+  insta2: U('1529720317453-c8da503f2051', 800, 800),
+  insta3: U('1521572163474-6864f9cf17ab', 800, 800),
+  insta4: U('1542291026-7eec264c27ff',    800, 800),
+  insta5: U('1552902865-b72c031ac5ea',    800, 800),
+  insta6: U('1503342217505-b0a15ec3261c', 800, 800),
+};
+
+// Helper: <img> with CSS fallback on error
+function pImg(src, fallbackCss, alt = '', style = 'width:100%;height:100%;object-fit:cover;display:block;') {
+  return `<img src="${src}" alt="${alt}" style="${style}" loading="lazy"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+  <div class="product-img-placeholder ${fallbackCss}" style="display:none;width:100%;height:100%;"></div>`;
+}
+
 const PRODUCTS = [
   {
     id: 1,
@@ -20,6 +70,7 @@ const PRODUCTS = [
     description: 'Классические спортивные штаны из плотного хлопкового джерси. Прямой крой, эластичный пояс с кулиской, два боковых кармана и карман сзади. Манжеты снизу.',
     badge: 'Новинка',
     imgColor: { black: 'pip-black', gray: 'pip-gray' },
+    imgs: { black: PHOTOS.darkPants, gray: PHOTOS.darkPants2 },
     isNew: true,
     stock: { S: 10, M: 8, L: 5, XL: 3 }
   },
@@ -35,6 +86,7 @@ const PRODUCTS = [
     description: 'Прямые джинсы из плотного денима. Классический пятикарманный дизайн. Металлическая фурнитура с гравировкой DAMIRO.',
     badge: null,
     imgColor: { black: 'pip-black' },
+    imgs: { black: PHOTOS.darkJeans },
     isNew: false,
     stock: { S: 6, M: 10, L: 8, XL: 4 }
   },
@@ -50,6 +102,7 @@ const PRODUCTS = [
     description: 'Оверсайз худи из 400г плотного хлопка. Большой карман-кенгуру, регулируемый капюшон. Вышивка DAMIRO на груди.',
     badge: 'Хит',
     imgColor: { black: 'pip-black', white: 'pip-light' },
+    imgs: { black: PHOTOS.darkHoodie, white: PHOTOS.whiteHoodie },
     isNew: false,
     stock: { S: 12, M: 15, L: 10, XL: 6 }
   },
@@ -65,6 +118,7 @@ const PRODUCTS = [
     description: 'Свитшот на молнии из плотного хлопкового флиса. Стойка-воротник, два боковых кармана на молнии. Минималистичный крой.',
     badge: null,
     imgColor: { black: 'pip-black', gray: 'pip-gray' },
+    imgs: { black: PHOTOS.darkStreet, gray: PHOTOS.darkPants2 },
     isNew: true,
     stock: { S: 8, M: 12, L: 9, XL: 5 }
   },
@@ -80,6 +134,7 @@ const PRODUCTS = [
     description: 'Анорак и штаны из водонепроницаемой ткани. Проклеенные швы, вентиляционные молнии подмышками, регулируемые манжеты. Упаковывается в собственный карман.',
     badge: 'Лимитед',
     imgColor: { black: 'pip-black', white: 'pip-light', gray: 'pip-gray' },
+    imgs: { black: PHOTOS.darkJacket, white: PHOTOS.lightOutfit, gray: PHOTOS.darkEditorial },
     isNew: true,
     stock: { S: 4, M: 6, L: 3 }
   },
@@ -95,6 +150,7 @@ const PRODUCTS = [
     description: 'Базовый лонгслив из мерсеризованного хлопка 200г. Плотная посадка, рёбра на манжетах и горловине. Идеальная базовая вещь для любого образа.',
     badge: null,
     imgColor: { black: 'pip-black' },
+    imgs: { black: PHOTOS.darkLong },
     isNew: false,
     stock: { S: 20, M: 18, L: 12 }
   },
@@ -110,6 +166,7 @@ const PRODUCTS = [
     description: 'Карго-штаны с накладными карманами. Хлопковый твил, прямой крой с объёмным кроем в бёдрах. Эластичный пояс со шнуровкой.',
     badge: null,
     imgColor: { black: 'pip-black' },
+    imgs: { black: PHOTOS.darkPants },
     isNew: false,
     stock: { S: 7, M: 9, L: 6 }
   },
@@ -125,6 +182,7 @@ const PRODUCTS = [
     description: 'Зип-худи на молнии из 400г флиса. Два кармана на молнии, регулируемый капюшон. Металлическая молния с кожаным пуллером.',
     badge: 'Новинка',
     imgColor: { black: 'pip-black', gray: 'pip-gray' },
+    imgs: { black: PHOTOS.darkZip, gray: PHOTOS.darkHoodie },
     isNew: true,
     stock: { S: 6, M: 10, L: 7 }
   },
@@ -140,6 +198,7 @@ const PRODUCTS = [
     description: 'Жилет на молнии из плотного флиса. Два боковых кармана, высокий воротник. Современный силуэт, подходит для слоёных образов.',
     badge: null,
     imgColor: { black: 'pip-black' },
+    imgs: { black: PHOTOS.darkVest },
     isNew: false,
     stock: { S: 5, M: 8, L: 6 }
   },
@@ -155,6 +214,7 @@ const PRODUCTS = [
     description: 'Рубашка из хлопка оксфорд. Классический воротник на пуговицах, нагрудный карман. Вышивка DAMIRO на манжете. Relaxed fit.',
     badge: null,
     imgColor: { white: 'pip-light' },
+    imgs: { white: PHOTOS.whiteShirt },
     isNew: false,
     stock: { S: 9, M: 14, L: 8 }
   },
@@ -170,6 +230,7 @@ const PRODUCTS = [
     description: 'Коллекционный пазл DAMIRO на 500 деталей. Фирменный дизайн с паттерном коллекции. Упаковка в фирменную коробку. Идеальный подарок.',
     badge: 'Коллаб',
     imgColor: { black: 'pip-gray' },
+    imgs: { black: PHOTOS.accessories2 },
     isNew: true,
     stock: { 'ONE SIZE': 30 }
   },
@@ -185,6 +246,7 @@ const PRODUCTS = [
     description: 'Брелок из матового металла с гравировкой DAMIRO. Доступен в 6 вариантах дизайна. Кольцо из нержавеющей стали.',
     badge: null,
     imgColor: { black: 'pip-black' },
+    imgs: { black: PHOTOS.accessories },
     isNew: false,
     variants: 6,
     stock: { 'ONE SIZE': 50 }
@@ -363,13 +425,23 @@ function showToast(message, icon = '✓') {
 // ============================================
 function renderProductCard(product, selectedColor = null) {
   const color = selectedColor || product.colors[0];
-  const imgClass = product.imgColor[color] || 'pip-black';
+  const fallbackCss = product.imgColor[color] || 'pip-black';
+  const imgSrc = (product.imgs || {})[color] || null;
+  // alt image: pick the next color's img or same with different params
+  const altColor = product.colors.find(c => c !== color) || color;
+  const altImgSrc = (product.imgs || {})[altColor] || imgSrc;
   const isWish = isWishlisted(product.id);
   return `
     <div class="product-card fade-up" onclick="navigate('product', {productId: ${product.id}})">
       <div class="product-card-img-wrap">
-        <div class="product-img-placeholder ${imgClass}" data-category="${product.category}"></div>
-        <div class="product-img-placeholder ${imgClass === 'pip-black' ? 'pip-gray' : 'pip-black'} product-card-img-alt" style="position:absolute;inset:0;"></div>
+        ${imgSrc
+          ? `<img src="${imgSrc}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+             <div class="product-img-placeholder ${fallbackCss}" style="display:none;width:100%;height:100%;"></div>`
+          : `<div class="product-img-placeholder ${fallbackCss}" data-category="${product.category}"></div>`}
+        ${altImgSrc && altImgSrc !== imgSrc
+          ? `<img src="${altImgSrc}" alt="${product.name}" class="product-card-img-alt" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" loading="lazy">`
+          : `<div class="product-img-placeholder ${fallbackCss === 'pip-black' ? 'pip-gray' : 'pip-black'} product-card-img-alt" style="position:absolute;inset:0;"></div>`}
         ${product.badge ? `<div class="product-card-badge">${product.badge}</div>` : ''}
         <button class="product-card-wishlist ${isWish ? 'active' : ''}" data-wishlist="${product.id}" onclick="event.stopPropagation(); toggleWishlist(${product.id})">
           ${isWish
@@ -400,6 +472,10 @@ function renderHomePage() {
     <section class="hero" id="hero-section">
       <div class="hero-bg">
         <div class="hero-bg-visual"></div>
+        <img src="${PHOTOS.heroWide}" alt="DAMIRO Campaign"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;"
+          loading="eager"
+          onerror="this.style.display='none'">
         <div class="hero-bg-gradient"></div>
       </div>
       <div class="hero-content">
@@ -445,7 +521,7 @@ function renderHomePage() {
       <div class="container">
         <div class="featured-grid fade-in">
           <div class="featured-hero" onclick="navigate('shop')">
-            <div class="product-img-placeholder pip-black" style="width:100%;height:100%;" data-category="ВЕРХНЯЯ ОДЕЖДА"></div>
+            ${pImg(PHOTOS.featW, 'pip-black', 'Верхняя одежда', 'width:100%;height:100%;object-fit:cover;display:block;')}
             <div class="featured-overlay">
               <div class="featured-tag">Лимитированная серия</div>
               <div class="featured-title">Водонепроницаемый костюм</div>
@@ -453,7 +529,7 @@ function renderHomePage() {
             </div>
           </div>
           <div class="featured-item" onclick="navigate('shop')">
-            <div class="product-img-placeholder pip-gray" style="width:100%;height:100%;" data-category="ХУДИ"></div>
+            ${pImg(PHOTOS.feat2W, 'pip-gray', 'Худи', 'width:100%;height:100%;object-fit:cover;display:block;')}
             <div class="featured-overlay">
               <div class="featured-tag">Базовая линейка</div>
               <div class="featured-title">Essential Hoodies</div>
@@ -461,7 +537,7 @@ function renderHomePage() {
             </div>
           </div>
           <div class="featured-item" onclick="navigate('shop')">
-            <div class="product-img-placeholder pip-light" style="width:100%;height:100%;" data-category="БРЮКИ"></div>
+            ${pImg(PHOTOS.feat3W, 'pip-light', 'Штаны', 'width:100%;height:100%;object-fit:cover;display:block;')}
             <div class="featured-overlay">
               <div class="featured-tag">Мужская линейка</div>
               <div class="featured-title">Pants Collection</div>
@@ -522,9 +598,11 @@ function renderHomePage() {
           <h2 class="heading-lg">@damiro.official</h2>
         </div>
         <div class="insta-grid stagger">
-          ${['pip-black','pip-gray','pip-light','pip-black','pip-gray','pip-light'].map((cls,i) => `
+          ${[PHOTOS.insta1,PHOTOS.insta2,PHOTOS.insta3,PHOTOS.insta4,PHOTOS.insta5,PHOTOS.insta6].map((src, i) => `
             <div class="insta-item" onclick="window.open('#')">
-              <div class="product-img-placeholder ${cls}" style="width:100%;height:100%;" data-category=""></div>
+              <img src="${src}" alt="DAMIRO Instagram" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="product-img-placeholder ${['pip-black','pip-gray','pip-light','pip-black','pip-gray','pip-light'][i]}" style="display:none;width:100%;height:100%;"></div>
               <div class="insta-item-overlay">
                 <svg class="insta-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none"/></svg>
               </div>
@@ -751,17 +829,24 @@ function renderProductPage() {
   const related = PRODUCTS.filter(p => p.id !== product.id && p.categorySlug === product.categorySlug).slice(0, 4);
   const isWish = isWishlisted(product.id);
 
+  const mainImgSrc = (product.imgs || {})[color] || null;
+
   const thumbColors = product.colors.map((c, i) => {
     const cls = product.imgColor[c] || 'pip-black';
+    const tsrc = (product.imgs || {})[c] || null;
     return `<div class="product-gallery-thumb ${c === color ? 'active' : ''}" onclick="setProductColor('${c}')">
-      <div class="product-img-placeholder ${cls}" style="width:100%;height:100%;"></div>
+      ${tsrc
+        ? `<img src="${tsrc}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+           <div class="product-img-placeholder ${cls}" style="display:none;width:100%;height:100%;"></div>`
+        : `<div class="product-img-placeholder ${cls}" style="width:100%;height:100%;"></div>`}
     </div>`;
   });
 
+  // Fill up to 5 thumbs with alt-angle placeholders
   while (thumbColors.length < 5) {
     const cls = product.imgColor[product.colors[0]] || 'pip-black';
-    thumbColors.push(`<div class="product-gallery-thumb ${thumbColors.length === 0 ? 'active' : ''}" onclick="">
-      <div class="product-img-placeholder ${cls}" style="width:100%;height:100%;opacity:0.5;"></div>
+    thumbColors.push(`<div class="product-gallery-thumb">
+      <div class="product-img-placeholder ${cls}" style="width:100%;height:100%;opacity:0.35;"></div>
     </div>`);
   }
 
@@ -771,7 +856,12 @@ function renderProductPage() {
         <!-- Gallery -->
         <div class="product-gallery">
           <div class="product-gallery-main" id="product-gallery-main">
-            <div class="product-img-placeholder ${imgClass}" style="width:100%;height:100%;" data-category="${product.category}" id="main-product-img"></div>
+            ${mainImgSrc
+              ? `<img src="${mainImgSrc}" alt="${product.name}" id="main-product-img"
+                   style="width:100%;height:100%;object-fit:cover;display:block;" loading="eager"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                 <div class="product-img-placeholder ${imgClass}" style="display:none;width:100%;height:100%;" id="main-product-fallback"></div>`
+              : `<div class="product-img-placeholder ${imgClass}" style="width:100%;height:100%;" data-category="${product.category}" id="main-product-img"></div>`}
           </div>
           <div class="product-gallery-thumbs">
             ${thumbColors.slice(0, 5).join('')}
@@ -882,10 +972,22 @@ function setProductColor(color) {
   const product = PRODUCTS.find(p => p.id === state.currentProductId);
   if (!product) return;
   const imgClass = product.imgColor[color] || 'pip-black';
-  const main = document.getElementById('main-product-img');
-  if (main) {
-    main.className = `product-img-placeholder ${imgClass}`;
-    main.setAttribute('data-category', product.category);
+  const newSrc = (product.imgs || {})[color] || null;
+  const mainWrap = document.getElementById('product-gallery-main');
+  if (mainWrap && newSrc) {
+    let img = mainWrap.querySelector('img#main-product-img');
+    if (img) {
+      img.src = newSrc;
+    } else {
+      // was a placeholder div, swap to img
+      mainWrap.innerHTML = `<img src="${newSrc}" alt="${product.name}" id="main-product-img"
+        style="width:100%;height:100%;object-fit:cover;display:block;" loading="eager"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="product-img-placeholder ${imgClass}" style="display:none;width:100%;height:100%;"></div>`;
+    }
+  } else if (mainWrap) {
+    const ph = mainWrap.querySelector('.product-img-placeholder, #main-product-img');
+    if (ph) { ph.className = `product-img-placeholder ${imgClass}`; }
   }
   document.querySelectorAll('.color-btn').forEach(btn => {
     btn.classList.toggle('active', btn.title === product.colorNames[color]);
@@ -942,7 +1044,11 @@ function openQuickView(productId) {
   if (!modal) return;
   modal.querySelector('.modal-grid').innerHTML = `
     <div class="modal-img">
-      <div class="product-img-placeholder ${imgClass}" style="width:100%;height:100%;" data-category="${product.category}"></div>
+      ${(product.imgs || {})[color]
+        ? `<img src="${(product.imgs)[color]}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+           <div class="product-img-placeholder ${imgClass}" style="display:none;width:100%;height:100%;"></div>`
+        : `<div class="product-img-placeholder ${imgClass}" style="width:100%;height:100%;"></div>`}
     </div>
     <div class="modal-info">
       <div class="modal-category">${product.category}</div>
@@ -991,6 +1097,9 @@ function renderAboutPage() {
   return `
     <div class="about-hero">
       <div class="about-hero-bg"></div>
+      <img src="${PHOTOS.aboutHero}" alt="DAMIRO Brand"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;"
+        loading="lazy" onerror="this.style.display='none'">
       <div class="about-hero-content">
         <div class="caption" style="color:rgba(255,255,255,0.5);margin-bottom:16px;">О нас</div>
         <h1 class="display-lg" style="color:var(--white);max-width:800px;">Мы создаём одежду для тех, кто думает.</h1>
@@ -1010,14 +1119,16 @@ function renderAboutPage() {
             </div>
           </div>
           <div class="about-img fade-in">
-            <div class="product-img-placeholder pip-black" style="width:100%;height:100%;" data-category="DAMIRO 2020"></div>
+            ${pImg(PHOTOS.aboutStory, 'pip-black', 'DAMIRO 2020')}
           </div>
         </div>
       </div>
     </section>
 
     <div class="about-full-img fade-in">
-      <div class="product-img-placeholder pip-gray" style="width:100%;height:100%;opacity:0.7;" data-category=""></div>
+      <img src="${PHOTOS.aboutFull}" alt="DAMIRO Campaign 2025"
+        style="width:100%;height:100%;object-fit:cover;opacity:0.6;display:block;"
+        loading="lazy" onerror="this.style.display='none'">
       <div class="about-full-img-caption">
         <div class="caption" style="color:rgba(255,255,255,0.5);margin-bottom:8px;">Кампания 2025</div>
         <div class="display-md" style="color:var(--white);">Less is More</div>
